@@ -131,13 +131,51 @@ class SignupScreen extends StatelessWidget {
                           ),
                         ),
 
+
                         onPressed: () {
-                          controller.signup(
-                            nameController.text.trim(),
+                          controller.resetPassword(
                             emailController.text.trim(),
                             passwordController.text.trim(),
                           );
-                        },
+                        if (
+                        nameController.text.trim().isEmpty ||
+                        emailController.text.trim().isEmpty ||
+                            passwordController.text.trim().isEmpty
+                        ) {
+
+                          Get.snackbar(
+                            "Error",
+                            "Please fill all fields",
+                          );
+
+                          return;
+                        }
+                          if (!GetUtils.isEmail(emailController.text.trim())
+                          ) {
+
+                            Get.snackbar(
+                              "Error",
+                              "Enter a valid email",
+                            );
+
+                            return;
+                          }
+                          if (passwordController.text.length < 6
+                          ) {
+
+                            Get.snackbar(
+                              "Error",
+                              "Password must be at least 6 characters",
+                            );
+
+                            return;
+                          }
+                        controller.signup(
+                          nameController.text.trim(),
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                        );
+                      },
 
                         child: const Text(
                           "REGISTER",
@@ -183,7 +221,7 @@ class SignupScreen extends StatelessWidget {
   Widget _passwordField() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: Colors.white.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white24),
       ),
@@ -223,7 +261,7 @@ class SignupScreen extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: Colors.white.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white24),
       ),
@@ -246,11 +284,11 @@ class SignupScreen extends StatelessWidget {
       height: size,
       width: size * 1.6,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: Colors.white.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(100),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.08),
             blurRadius: 20,
             spreadRadius: 5,
           ),

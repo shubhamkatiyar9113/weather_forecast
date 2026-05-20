@@ -36,7 +36,6 @@ class ForgotPasswordScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
-
             TextField(
               controller: newPasswordController,
               obscureText: true,
@@ -47,10 +46,29 @@ class ForgotPasswordScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(width: double.infinity),
 
             ElevatedButton(
               onPressed: () async {
+                if (newPasswordController.text.length < 6
+                ) {
+
+                  Get.snackbar(
+                    "Error",
+                    "Password must be at least 6 characters",
+                  );
+
+                  return;
+                }
+                if(emailController.text.isEmpty ||
+                    newPasswordController.text.isEmpty)
+                {
+                  Get.snackbar(
+                    "Error",
+                    "All fields required",
+                  );
+                  return;
+                }
 
                 await authController.resetPassword(
                   emailController.text,
@@ -58,6 +76,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                 );
 
               },
+
               child: const Text("Reset Password"),
             ),
           ],

@@ -13,6 +13,7 @@ class LoginScreen extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.limeAccent.withOpacity(0.3),
+                              color: Colors.limeAccent.withValues(alpha: 0.08),
                               blurRadius: 40,
                             ),
                           ],
@@ -111,8 +112,8 @@ class LoginScreen extends StatelessWidget {
                     ),
 
                     const SizedBox(height: 40),
-
                     /// EMAIL
+
                     const Text("Email", style: TextStyle(color: Colors.white)),
                     const SizedBox(height: 10),
 
@@ -153,20 +154,36 @@ class LoginScreen extends StatelessWidget {
 
                     const SizedBox(height: 20),
 
-                    /// LOGIN BUTTON
                     SizedBox(
                       width: double.infinity,
                       height: 55,
+
                       child: ElevatedButton(
+
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.limeAccent,
                           foregroundColor: Colors.black,
+
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
 
                         onPressed: () {
+
+                          if (
+                          emailController.text.trim().isEmpty ||
+                              passwordController.text.trim().isEmpty
+                          ) {
+
+                            Get.snackbar(
+                              "Error",
+                              "Please fill all fields",
+                            );
+
+                            return;
+                          }
+
                           controller.login(
                             emailController.text.trim(),
                             passwordController.text.trim(),
@@ -175,6 +192,7 @@ class LoginScreen extends StatelessWidget {
 
                         child: const Text(
                           "SIGN IN",
+
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -182,8 +200,6 @@ class LoginScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-
-                    const SizedBox(height: 25),
 
                     /// SIGNUP
                     Row(
@@ -221,11 +237,11 @@ class LoginScreen extends StatelessWidget {
       height: size,
       width: size * 1.6,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: Colors.white.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(100),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.05),
+            color: Colors.white.withValues(alpha: 0.08),
             blurRadius: 20,
             spreadRadius: 5,
           ),
@@ -243,7 +259,7 @@ class LoginScreen extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: Colors.white.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: Colors.white24),
       ),

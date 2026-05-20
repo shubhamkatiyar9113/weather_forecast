@@ -72,7 +72,8 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: Obx(() {
 
-                if (controller.isLoading.value) {
+                if (controller.isWeatherLoading.value ||
+                    controller.isForecastLoading.value) {
                   return const Center(
                     child: CircularProgressIndicator(color: Colors.limeAccent),
                   );

@@ -8,6 +8,7 @@ class AuthController extends GetxController {
 
   RxBool isLoggedIn = false.obs;
 
+
   /// SIGNUP
   Future<void> signup(
       String name,
@@ -16,6 +17,17 @@ class AuthController extends GetxController {
       ) async {
 
     final prefs = await SharedPreferences.getInstance();
+    String? savedEmail =
+    prefs.getString("email");
+    if (savedEmail == email) {
+
+      Get.snackbar(
+        "Error",
+        "Email already exists",
+      );
+
+      return;
+    }
 
     await prefs.setString("name", name);
     await prefs.setString("email", email);

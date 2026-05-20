@@ -5,6 +5,12 @@ import '../services/weather_services.dart';
 import '../models/daily_forecast_model.dart';
 
 class WeatherController extends GetxController {
+  @override
+  void onInit() {
+    fetchWeather("Delhi");
+    fetchForecast("Delhi");
+    super.onInit();
+  }
   final WeatherService service = WeatherService();
 
   var weather = Rxn<WeatherModel>();
@@ -14,12 +20,14 @@ class WeatherController extends GetxController {
   /// 📅 5-day grouped forecast
   var dailyForecast = <DailyForecastModel>[].obs;
 
-  var isLoading = false.obs;
+  var isWeatherLoading = false.obs;
+  var isForecastLoading = false.obs;
 
   /// 🌤 CURRENT WEATHER
   Future<void> fetchWeather(String city) async {
     try {
-      isLoading.value = true;
+      isWeatherLoading.value = true;
+      isForecastLoading.value = true;
 
       final result = await service.getWeather(city);
       weather.value = result;
@@ -27,14 +35,16 @@ class WeatherController extends GetxController {
     } catch (e) {
       Get.snackbar("Error", e.toString());
     } finally {
-      isLoading.value = false;
+      isWeatherLoading.value = false;
+      isForecastLoading.value = false;
     }
   }
 
   /// 📊 FORECAST (3-hour data + grouped daily)
   Future<void> fetchForecast(String city) async {
     try {
-      isLoading.value = true;
+      isWeatherLoading.value = true;
+      isForecastLoading.value = false;
 
       final data = await service.getForecast(city);
 
@@ -51,7 +61,8 @@ class WeatherController extends GetxController {
     } catch (e) {
       Get.snackbar("Error", e.toString());
     } finally {
-      isLoading.value = false;
+      isWeatherLoading.value = false;
+      isForecastLoading.value = false;
     }
   }
 
