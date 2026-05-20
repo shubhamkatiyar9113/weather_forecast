@@ -6,7 +6,7 @@ import '../../controllers/auth_controller.dart';
 class SignupScreen extends StatelessWidget {
   SignupScreen({super.key});
 
-  final controller = Get.put(AuthController());
+  final controller = Get.find<AuthController>();
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
